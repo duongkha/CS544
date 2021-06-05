@@ -64,17 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.deleteCookies("JSESSIONID")
 				.and()
 				.authorizeRequests()
-				.antMatchers("/api").hasAnyAuthority("BUYER", "SELLER", "ADMIN")
-				.antMatchers("/api/users/**").hasAnyAuthority("BUYER", "SELLER", "ADMIN")
+				.antMatchers("/api").hasAnyAuthority("ADMIN", "FACULTY", "STUDENT")
+				.antMatchers("/api/users/**").hasAnyAuthority("ADMIN", "FACULTY", "STUDENT")
 				.antMatchers("/api/admin").hasAnyAuthority("ADMIN")
-				.antMatchers("/api/sellers/**").hasAnyAuthority("BUYER", "SELLER", "ADMIN")
-				.antMatchers("/api/reviews/**").hasAnyAuthority("BUYER","SELLER", "ADMIN")
-				//.antMatchers("/api/products/**").hasAnyAuthority("SELLER", "ADMIN")
-				//.antMatchers("/api/orders/**").hasAnyAuthority("BUYER", "SELLER", "ADMIN")
-				//.antMatchers("/api/orders/**").permitAll()//hasAnyAuthority("BUYER", "SELLER", "ADMIN")
+				.antMatchers("/api/student/**").hasAnyAuthority("STUDENT", "ADMIN")
 				.antMatchers("/signup").permitAll()
-				.antMatchers("/authenticate").permitAll()
-				.antMatchers("/api/products/**").permitAll()
+				.antMatchers("/signin").permitAll()
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 
