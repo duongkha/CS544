@@ -13,7 +13,7 @@ public class AdminController {
     AdminService adminService;
 
     @GetMapping("/approve")
-    public Boolean approveFaculty(@RequestParam("faculty") Long id){
-        return adminService.approveFaculty(id);
+    public Boolean approveFaculty(@RequestParam("userid") Long id){
+        return adminService.approveUser(id);
     }
 }
