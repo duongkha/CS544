@@ -16,17 +16,20 @@ public class Student implements Serializable {
     private static final long serialVersionUID = 7359591984285268537L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private long id;
 
     @Column(name = "approved")
     private boolean approved;
 
-    @Column(name = "studentId")
+    @Column(name = "student_id")
     private String studentId;
+    
+    @Column(name = "barcode")
+    private String barcode;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     User user;
 }

@@ -8,9 +8,9 @@ import lombok.Setter;
 public class StudentDTO {
     private long id;
 
+    private String studentId;
+    
     private boolean approved;
-
-    private String companyName;
 
     UserDTO user;
 }

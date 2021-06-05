@@ -1,6 +1,7 @@
 package miu.edu.attendance.service;
 
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import miu.edu.attendance.domain.Address;
 import miu.edu.attendance.domain.Admin;
 import miu.edu.attendance.domain.Faculty;
 import miu.edu.attendance.domain.Role;
@@ -24,7 +26,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 @Service
+
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -37,6 +42,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	StudentRepository studentRepository;
 	@Autowired
 	AdminRepository adminRepository;
+	
+	@Autowired
+	ModelMapper modelMapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String username)
@@ -68,7 +76,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		return null;
 	}
-
+	
+	@Transactional
 	public String signUpUser(NewUser newUser) {
 		try {
 			User u = userRepository.getUserByUsername(newUser.getUsername());
@@ -84,6 +93,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
 			user.setPhoneNumber(newUser.getPhoneNumber());
+			Address address= modelMapper.map(newUser.getAddress(), Address.class);
+			user.setAddress(address);
 			List<Role> roles = roleRepository.findRolesByIdIn(newUser.getRoles().
 												stream().map(r->r.getId()).collect(Collectors.toList()));
 			user.setRoles(new HashSet<>(roles));
@@ -105,13 +116,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 						break;
 					case 3:
 						Student student = new Student();
+						student.setStudentId(newUser.getStudentId());
+						student.setBarcode(newUser.getBarcodeId());
 						user.setEnabled(true);
 						student.setUser(user);
 						studentRepository.save(student);
 						break;
 				}
 			}
-
+			//userRepository.save(user);
 
 			//final ConfirmationToken confirmationToken = new ConfirmationToken(user);
 

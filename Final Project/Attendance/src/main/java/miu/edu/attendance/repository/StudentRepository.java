@@ -8,7 +8,10 @@ import miu.edu.attendance.domain.Student;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 @Repository
+@Transactional
 public interface StudentRepository extends CrudRepository<Student,Long> {
     List<Student> findAll();
     Student findStudentById(Long id);
