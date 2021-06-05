@@ -52,5 +52,16 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    public Boolean isStudent() {
+    	return roles.stream().filter(x->x.getId() == 3).findAny().isPresent();
+    }
+    
+    public Boolean isFaculty() {
+    	return roles.stream().filter(x->x.getId() == 2).findAny().isPresent();
+    }
+    public Boolean isAdmin() {
+    	return roles.stream().filter(x->x.getId() == 1).findAny().isPresent();
+    }
+    
 
 }

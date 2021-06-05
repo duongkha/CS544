@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 @Service
-
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -77,7 +77,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return null;
 	}
 	
-	@Transactional
+
 	public String signUpUser(NewUser newUser) {
 		try {
 			User u = userRepository.getUserByUsername(newUser.getUsername());
@@ -98,18 +98,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			List<Role> roles = roleRepository.findRolesByIdIn(newUser.getRoles().
 												stream().map(r->r.getId()).collect(Collectors.toList()));
 			user.setRoles(new HashSet<>(roles));
-			final User createdUser = userRepository.save(user);
+			userRepository.save(user);
 			for(Role role:roles){
 				switch ((int) role.getId()){
 					case 1:
 						Admin admin = new Admin();
-						user.setEnabled(true);
+						user.setEnabled(false);
 						admin.setUser(user);
 						admin.setLevel("1");
 						adminRepository.save(admin);
 						break;
 					case 2:
 						Faculty faculty = new Faculty();
+						user.setEnabled(false);
 						faculty.setApproved(false);
 						faculty.setUser(user);
 						facultyRepository.save(faculty);
@@ -118,13 +119,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 						Student student = new Student();
 						student.setStudentId(newUser.getStudentId());
 						student.setBarcode(newUser.getBarcodeId());
-						user.setEnabled(true);
+						user.setEnabled(false);
+						student.setApproved(false);
 						student.setUser(user);
 						studentRepository.save(student);
 						break;
 				}
 			}
-			//userRepository.save(user);
 
 			//final ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
