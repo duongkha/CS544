@@ -23,5 +23,4 @@ public class ClassSession {
     private TimeSlot timeSlot;
 
 
-
 }

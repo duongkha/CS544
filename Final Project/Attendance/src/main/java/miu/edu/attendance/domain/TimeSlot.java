@@ -23,7 +23,7 @@ public class TimeSlot {
     private String code;  //Am / Pm
 
     @OneToMany (mappedBy = "timeSlot",cascade = CascadeType.PERSIST)
-    private List<miu.edu.attendance.domain.ClassSession> classSessions;
+    private List<ClassSession> classSessions;
 
 
 

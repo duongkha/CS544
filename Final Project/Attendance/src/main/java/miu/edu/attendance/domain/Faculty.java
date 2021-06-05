@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,5 +30,8 @@ public class Faculty implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     User user;
+
+    @OneToMany(mappedBy = "faculty",cascade = CascadeType.PERSIST)
+    private List<CourseOffering> courseOfferings;
 
 }

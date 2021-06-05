@@ -27,7 +27,7 @@ public class CourseOffering {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Faculty faculty;
     @OneToMany(cascade = CascadeType.PERSIST)
-    private List<miu.edu.attendance.domain.ClassSession> classSessions;
+    private List<ClassSession> classSessions;
     @ManyToOne (cascade = CascadeType.PERSIST)
     private Course course;
 

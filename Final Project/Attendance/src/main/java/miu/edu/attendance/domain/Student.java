@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -32,4 +33,10 @@ public class Student implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     User user;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name="Registration")
+    private List<CourseOffering> courseOfferings;
+    @OneToMany(mappedBy = "student",cascade = CascadeType.PERSIST)
+    private List<BarcodeRecord> barcodeRecords;
 }

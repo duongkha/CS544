@@ -22,7 +22,7 @@ public class BarcodeRecord {
     @ManyToOne (cascade = CascadeType.PERSIST)
     private Student student;
     @OneToOne (cascade = CascadeType.PERSIST)
-    private miu.edu.attendance.domain.TimeSlot timeSlot;
+    private TimeSlot timeSlot;
 
 
 }
