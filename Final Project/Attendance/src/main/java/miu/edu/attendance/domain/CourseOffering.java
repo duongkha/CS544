@@ -21,8 +21,7 @@ public class CourseOffering {
     private Long id;
     private LocalDate starteDate;
     private LocalDate endDate;
-    @ManyToMany
-    @JoinTable
+    @ManyToMany(mappedBy = "courseOfferings")
     private List<Student> students;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Faculty faculty;
