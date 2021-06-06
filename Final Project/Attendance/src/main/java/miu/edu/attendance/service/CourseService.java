@@ -2,6 +2,9 @@ package miu.edu.attendance.service;
 
 
 import miu.edu.attendance.domain.Course;
+import miu.edu.attendance.dto.CourseDTO;
+
+import java.util.List;
 
 public interface CourseService {
 
@@ -9,6 +12,7 @@ public interface CourseService {
     public boolean updateCourse (Course course);
     public boolean deleteCourseByID (Long id);
     public Course findCourseByID( Long id);
+    public List<CourseDTO> getAllCourses();
 
 
 }

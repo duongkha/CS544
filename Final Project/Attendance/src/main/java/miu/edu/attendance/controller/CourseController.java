@@ -10,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("courses")
 public class CourseController {
 
     @Autowired
@@ -19,8 +22,13 @@ public class CourseController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping("/courses/{id}")
-    public ResponseEntity<CourseDTO> getStudent(@PathVariable int id){
+    @GetMapping(value = "/")
+    public ResponseEntity<List<CourseDTO>> getAllCourses(){
+        return new ResponseEntity(courseService.getAllCourses(),HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseDTO> getCourse(@PathVariable int id){
 
 
        Course course= courseService.findCourseByID(Long.valueOf(id));
@@ -33,13 +41,13 @@ public class CourseController {
 
     }
 
-    @RequestMapping(value={"/addCourse"}, method= RequestMethod.POST)
+    @RequestMapping(value={"/course"}, method= RequestMethod.POST)
     public void addCourse(@RequestBody Course course){
         System.out.println("course saving");
         courseService.addCourse(course);
     }
 
-    @RequestMapping(value={"/updateCourse"}, method= RequestMethod.PUT)
+    @RequestMapping(value={"/course"}, method= RequestMethod.PUT)
     public ResponseEntity updateCourse (@RequestBody Course course){
         System.out.println("course controller");
         if(courseService.updateCourse(course)){
@@ -48,7 +56,7 @@ public class CourseController {
    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
   }
 
-    @RequestMapping(value={"/deleteCourse/{id}"}, method= RequestMethod.DELETE)
+    @RequestMapping(value={"/{id}"}, method= RequestMethod.DELETE)
     public ResponseEntity deleteCourse(@PathVariable int id){
         System.out.println("course deleting");
        if(courseService.deleteCourseByID(Long.valueOf(id))){

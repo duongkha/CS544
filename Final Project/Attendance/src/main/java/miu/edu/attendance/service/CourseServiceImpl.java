@@ -1,11 +1,15 @@
 package miu.edu.attendance.service;
 
 import miu.edu.attendance.domain.Course;
+import miu.edu.attendance.dto.CourseDTO;
 import miu.edu.attendance.repository.CourseRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -14,6 +18,20 @@ public class CourseServiceImpl implements CourseService {
     private CourseRepository courseRepository;
 @Autowired
 ModelMapper modelMapper;
+
+
+
+
+
+    @Override
+    public List<CourseDTO> getAllCourses() {
+        List<Course> courses=courseRepository.findAll();
+        List<CourseDTO> courseDTOS= courses.stream().map(course->modelMapper.map(course,CourseDTO.class)).collect(Collectors.toList());
+        return courseDTOS;
+
+    }
+
+
     @Override
     public boolean addCourse(Course course) {
 
