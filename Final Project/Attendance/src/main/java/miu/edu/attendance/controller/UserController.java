@@ -60,7 +60,7 @@ public class UserController {
 
     @GetMapping({ "/myfacultyinfo" })
     public @ResponseBody
-    FacultyDTO getCurrentBuyer() {
+    FacultyDTO getCurrentFaculty() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userdetails = (UserDetailsImpl) auth.getPrincipal();
         Optional<Faculty> faculty =  facultyService.findAll().stream().filter(x->x.getUser().getUsername().equalsIgnoreCase(userdetails.getUsername())).findFirst();
