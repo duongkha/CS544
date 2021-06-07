@@ -103,6 +103,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 						Faculty faculty = new Faculty();
 						user.setEnabled(false);
 						faculty.setApproved(false);
+						faculty.setDepartment(newUser.getDepartment());
 						faculty.setUser(user);
 						facultyRepository.save(faculty);
 						break;
