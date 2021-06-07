@@ -16,9 +16,16 @@ public abstract class Person {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     private String firstName;
     private String lastName;
     //private Role role;
+    @Column(name = "approved")
+    private boolean approved;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    User user;
 
 }
