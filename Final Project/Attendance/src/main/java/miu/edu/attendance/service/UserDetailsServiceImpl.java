@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		User user = userRepository.getUserByUsername(username);
+		User user = userRepository.getUserByusername(username);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("Could not find user");
@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	public User updateProfile(NewUser updateUser){
-		User user = userRepository.getUserByUsername(updateUser.getUsername());
+		User user = userRepository.getUserByusername(updateUser.getUsername());
 		if (user!= null) {
 			if(!updateUser.getPassword().isEmpty()){
 				BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -71,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	public String signUpUser(NewUser newUser) {
 		try {
-			User u = userRepository.getUserByUsername(newUser.getUsername());
+			User u = userRepository.getUserByusername(newUser.getUsername());
 			if (u!= null) {
 				return "User name is existing.";
 			}
