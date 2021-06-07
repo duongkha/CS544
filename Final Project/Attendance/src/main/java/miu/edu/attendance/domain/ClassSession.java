@@ -22,5 +22,8 @@ public class ClassSession {
     @ManyToOne (cascade = CascadeType.PERSIST)
     private TimeSlot timeSlot;
 
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    private CourseOffering courseOffering;
+
 
 }
