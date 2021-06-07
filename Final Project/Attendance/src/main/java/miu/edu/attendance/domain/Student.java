@@ -13,26 +13,27 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "student")
-public class Student implements Serializable {
+public class Student  extends Person implements Serializable {
     private static final long serialVersionUID = 7359591984285268537L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private long id;
 
-    @Column(name = "approved")
-    private boolean approved;
+    //@Column(name = "approved")
+//    private boolean approved;
 
-    @Column(name = "student_id")
+    @Column(name = "studentId")
     private String studentId;
-    
-    @Column(name = "barcode")
-    private String barcode;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id")
-    User user;
+    private String barcodeId;
+//    private String firstName;
+//    private String lastName;
+
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name="user_id")
+//    User user;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name="Registration")

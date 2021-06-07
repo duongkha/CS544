@@ -1,7 +1,8 @@
 package miu.edu.attendance.service;
 
-import java.util.List;
 import miu.edu.attendance.domain.Faculty;
+
+import java.util.List;
 
 public interface FacultyService {
     List<Faculty> findAll();
