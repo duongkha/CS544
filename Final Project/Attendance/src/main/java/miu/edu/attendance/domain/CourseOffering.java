@@ -19,7 +19,7 @@ public class CourseOffering {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate starteDate;
+    private LocalDate startDate;
     private LocalDate endDate;
     @ManyToMany(mappedBy = "courseOfferings")
     private List<Student> students;
@@ -29,5 +29,10 @@ public class CourseOffering {
     private List<ClassSession> classSessions;
     @ManyToOne (cascade = CascadeType.PERSIST)
     private Course course;
+
+    public CourseOffering(LocalDate startDate, LocalDate endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
 }

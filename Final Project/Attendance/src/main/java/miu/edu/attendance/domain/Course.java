@@ -24,4 +24,12 @@ public class Course {
     @OneToMany (mappedBy = "course",cascade = CascadeType.PERSIST)
     private List<miu.edu.attendance.domain.CourseOffering> courseOfferings;
 
+    public boolean addCourseOffering (CourseOffering courseOffering){
+        if(courseOfferings.add(courseOffering)){
+            return true;
+        }
+        return false;
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package miu.edu.attendance.service;
 
 
+import miu.edu.attendance.domain.*;
+import miu.edu.attendance.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,18 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import miu.edu.attendance.domain.Address;
-import miu.edu.attendance.domain.Admin;
-import miu.edu.attendance.domain.Faculty;
-import miu.edu.attendance.domain.Role;
-import miu.edu.attendance.domain.Student;
-import miu.edu.attendance.domain.User;
 import miu.edu.attendance.dto.NewUser;
-import miu.edu.attendance.repository.AdminRepository;
-import miu.edu.attendance.repository.FacultyRepository;
-import miu.edu.attendance.repository.RoleRepository;
-import miu.edu.attendance.repository.StudentRepository;
-import miu.edu.attendance.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -118,7 +109,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					case 3:
 						Student student = new Student();
 						student.setStudentId(newUser.getStudentId());
-						student.setBarcode(newUser.getBarcodeId());
+						student.setBarcodeId(newUser.getBarcodeId());
 						user.setEnabled(false);
 						student.setApproved(false);
 						student.setUser(user);

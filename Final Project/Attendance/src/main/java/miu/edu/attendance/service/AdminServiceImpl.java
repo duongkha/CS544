@@ -20,10 +20,10 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class AdminServiceImpl implements AdminService{
     @Autowired
-    FacultyRepository facultyRepository;
+	FacultyRepository facultyRepository;
     
     @Autowired
-    StudentRepository studentRepository;
+	StudentRepository studentRepository;
     
     @Autowired
     UserRepository userRepository;
@@ -34,6 +34,7 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public Boolean approveUser(long id) {
     	User user = userRepository.findUserById(id);
+    	System.out.println("id"+ id);
     	if(user != null) {
     		if(user.isStudent()) {
     			Student student = studentRepository.findStudentByUserId(id);

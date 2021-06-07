@@ -49,7 +49,7 @@ public class UserController {
     public @ResponseBody StudentDTO getCurrentStudent() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userdetails = (UserDetailsImpl) auth.getPrincipal();
-        List<Student> studentList  = studentService.findAll();
+        List<Student> studentList  = studentService.getAllStudentinfo();
         Optional<Student> student = studentList
                                 .stream()
                                 .filter(s -> s.getUser().getUsername().compareToIgnoreCase(userdetails.getUsername()) == 0).findFirst();
