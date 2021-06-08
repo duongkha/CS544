@@ -1,13 +1,12 @@
 package miu.edu.attendance.controller;
 
 import miu.edu.attendance.domain.ClassSession;
-import miu.edu.attendance.dto.ClassSessionDTO;
+import miu.edu.attendance.dto.ClassSessionRequestDTO;
+import miu.edu.attendance.dto.ClassSessionResponseDTO;
 import miu.edu.attendance.service.ClassSessionService;
-import miu.edu.attendance.service.ClassSessionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,25 +20,41 @@ public class ClassSessionController {
     ClassSessionService classSessionService;
 
     @GetMapping("/")
-    public List<ClassSession> getAllClassSessions(){
+    public List<ClassSessionResponseDTO> getAllClassSessions(){
        return classSessionService.getAllClassSessions();
     }
 
 
     @PostMapping ("/")
-    public ResponseEntity addClassSession(@RequestBody ClassSessionDTO classSessionDTO){
-         if(classSessionService.addClassSession(classSessionDTO)){
+    public ResponseEntity addClassSession(@RequestBody ClassSessionRequestDTO classSessionRequestDTO){
+         if(classSessionService.addClassSession(classSessionRequestDTO)){
              return new ResponseEntity(HttpStatus.ACCEPTED);
          }
          return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/{id}")
-public ResponseEntity <ClassSession> getClassSessionById (@PathVariable Long id){
-        ClassSession classSession=classSessionService.findTClassSessionByID(id);
-        if(classSession!=null){
-            return new ResponseEntity<>(classSession,HttpStatus.OK);
+
+    @DeleteMapping ("/{id}")
+    public ResponseEntity deleteClasssessionById (@PathVariable Long id){
+        if(classSessionService.deleteClassSession(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping ("/")
+    public ResponseEntity updateClasssession(@RequestBody ClassSessionRequestDTO classSessionRequestDTO){
+        if(classSessionService.updateClassSession(classSessionRequestDTO)){
+            return new ResponseEntity(HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ClassSessionResponseDTO> findClassSessionById(@PathVariable Long id){
+        ClassSessionResponseDTO classSessionResponseDTO=classSessionService.findTClassSessionByID(id);
+       if( classSessionResponseDTO!=null){
+           return new ResponseEntity<>(classSessionResponseDTO,HttpStatus.OK);
+       }
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

@@ -10,19 +10,12 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class ClassSessionDTO {
+public class ClassSessionRequestDTO {
     private Long id;
-    private String date;
+    private LocalDate date;
     private Long locationId;
     private Long timeSlotId;
     private Long courseOfferingId;
-
-
-
-   private String location;
-   private String timeSlot;
-   private CourseOffering courseOffering;
-
 
 
 }
