@@ -23,6 +23,8 @@ public class BarcodeRecord {
     private Student student;
     @OneToOne (cascade = CascadeType.PERSIST)
     private TimeSlot timeSlot;
+    @OneToOne
+    private Location location;
 
 
 }

@@ -24,10 +24,7 @@ public class Student  extends Person implements Serializable {
     //@Column(name = "approved")
 //    private boolean approved;
 
-    @Column(name = "studentId")
-    private String studentId;
 
-    private String barcodeId;
 //    private String firstName;
 //    private String lastName;
 
@@ -35,9 +32,29 @@ public class Student  extends Person implements Serializable {
 //    @JoinColumn(name="user_id")
 //    User user;
 
+    @Column(name = "studentId")
+    private String studentId;
+
+    private String barcodeId;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name="Registration")
     private List<CourseOffering> courseOfferings;
     @OneToMany(mappedBy = "student",cascade = CascadeType.PERSIST)
     private List<BarcodeRecord> barcodeRecords;
+
+    public boolean addCourseOfferings(CourseOffering courseOffering){
+        if(courseOfferings.add(courseOffering)){
+            courseOffering.getStudents().add(this);
+            return true;
+        }
+        return false;
+    }
+    public boolean removeCourseOfferings(CourseOffering courseOffering){
+        if(courseOfferings.remove(courseOffering)){
+            courseOffering.getStudents().remove(this);
+            return true;
+        }
+        return false;
+    }
 }

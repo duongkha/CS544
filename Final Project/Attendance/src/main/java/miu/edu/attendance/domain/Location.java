@@ -20,7 +20,5 @@ public class Location {
     private String description;
     @OneToMany
     private List<BarcodeRecord> barcodeRecords;
-    @OneToOne (cascade = CascadeType.PERSIST)
-    private ClassSession session;
 
 }

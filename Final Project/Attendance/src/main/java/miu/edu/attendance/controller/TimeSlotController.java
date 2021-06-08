@@ -29,11 +29,13 @@ public class TimeSlotController {
     
     @PostMapping
     public Boolean addTimeSlot(@RequestBody TimeSlotDTO timeslotDTO){
+
         return timeSlotService.add(timeslotDTO);
     }
     
     @PostMapping("/update")
     public Boolean updateTimeSlot(@RequestBody TimeSlotDTO timeslotDTO){
+
         return timeSlotService.update(timeslotDTO);
     }
     
