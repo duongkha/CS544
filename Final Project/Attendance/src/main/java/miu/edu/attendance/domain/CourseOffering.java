@@ -35,4 +35,20 @@ public class CourseOffering {
         this.endDate = endDate;
     }
 
+
+    public boolean addStudent (Student student){
+        if(students.add(student)){
+            student.getCourseOfferings().add(this);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeStudent (Student student){
+        if(students.remove(student)){
+            student.getCourseOfferings().remove(this);
+            return true;
+        }
+        return false;
+    }
 }

@@ -21,6 +21,9 @@ public class ClassSession {
     private LocalDate date;
     @ManyToOne (cascade = CascadeType.PERSIST)
     private TimeSlot timeSlot;
-
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    private CourseOffering courseOffering;
+    @OneToOne (cascade = CascadeType.PERSIST)
+    private Location location;
 
 }
