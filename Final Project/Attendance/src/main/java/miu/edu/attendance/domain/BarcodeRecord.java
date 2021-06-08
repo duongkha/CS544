@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 public class BarcodeRecord {
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String barcodeId;
     private LocalDateTime date;

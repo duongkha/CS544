@@ -1,10 +1,12 @@
 package miu.edu.attendance.service;
 
 import miu.edu.attendance.domain.BarcodeRecord;
+import miu.edu.attendance.domain.Location;
 import miu.edu.attendance.domain.Student;
 import miu.edu.attendance.domain.TimeSlot;
 import miu.edu.attendance.dto.BarcodeRecordDTO;
 import miu.edu.attendance.repository.BarcodeRecordRepository;
+import miu.edu.attendance.repository.LocationRepository;
 import miu.edu.attendance.repository.StudentRepository;
 import miu.edu.attendance.repository.TimeSlotRepository;
 
@@ -31,6 +33,8 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 	@Autowired
 	TimeSlotRepository timeslotRepository;
 	
+	@Autowired
+	LocationRepository locationRepository;
 
 	@Autowired
 	ModelMapper modelMapper;
@@ -44,11 +48,14 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 			br.setBarcodeId(barcodeDTO.getBarcodeId());
 			br.setDate(barcodeDTO.getDate());
 	        		
-			Optional<TimeSlot> ts = timeslotRepository.findAll().stream().filter(x->x.getStartTime().compareTo(barcodeDTO.getDate().toLocalTime()) <= 0 && 
-									x.getEndTime().compareTo(barcodeDTO.getDate().toLocalTime()) >= 0).findFirst();
+			Optional<TimeSlot> ts = timeslotRepository.findAll().stream().filter(x->(x.getStartTime().compareTo(barcodeDTO.getDate().toLocalTime()) <= 0 && 
+									x.getEndTime().compareTo(barcodeDTO.getDate().toLocalTime()) >= 0) || 
+						(x.getStartTime().compareTo(barcodeDTO.getDate().toLocalTime()) > 0)).findFirst();
 			if(ts.isPresent())
 				br.setTimeSlot(ts.get());
-			//br.setLocation(location);
+			Optional<Location> lc = locationRepository.findById(barcodeDTO.getLocationId());
+			if(lc.isPresent())
+				br.setLocation(lc.get());
 			br.setStudent(student);
 			barcodeRecordRepository.save(br);
 			return true;
