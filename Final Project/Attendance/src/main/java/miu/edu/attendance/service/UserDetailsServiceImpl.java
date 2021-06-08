@@ -105,12 +105,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 						faculty.setApproved(false);
 						faculty.setDepartment(newUser.getDepartment());
 						faculty.setUser(user);
+						faculty.setFirstName(newUser.getFirstName());
+						faculty.setLastName(newUser.getLastName());
 						facultyRepository.save(faculty);
 						break;
 					case 3:
 						Student student = new Student();
 						student.setStudentId(newUser.getStudentId());
 						student.setBarcodeId(newUser.getBarcodeId());
+						student.setFirstName(newUser.getFirstName());
+						student.setLastName(newUser.getLastName());
 						user.setEnabled(false);
 						student.setApproved(false);
 						student.setUser(user);
