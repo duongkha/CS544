@@ -22,8 +22,9 @@ public class BarcodeRecordController {
     ModelMapper modelMapper;
 
     @GetMapping
-    public List<BarcodeRecordDTO> getAll(){
-        List<BarcodeRecord> barcodeRecords = barcodeRecordService.getAllBarcodeRecord();
+    public List<BarcodeRecordDTO> getAll(@RequestParam("page") Long pageNo, @RequestParam("size") Long size){
+        List<BarcodeRecord> barcodeRecords = barcodeRecordService.getAllBarcodeRecord().stream()
+        						.skip((pageNo - 1) * size).limit(size).collect(Collectors.toList());
         return barcodeRecords.stream().map(x->modelMapper.map(x, BarcodeRecordDTO.class)).collect(Collectors.toList());
 	}
     
