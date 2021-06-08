@@ -25,7 +25,7 @@ public class CourseOffering {
     private List<Student> students;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Faculty faculty;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ClassSession> classSessions;
     @ManyToOne (cascade = CascadeType.PERSIST)
     private Course course;
