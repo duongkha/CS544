@@ -18,8 +18,7 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    @OneToMany
-    private List<BarcodeRecord> barcodeRecords;
+   
     @OneToOne (cascade = CascadeType.PERSIST)
     private ClassSession session;
 
