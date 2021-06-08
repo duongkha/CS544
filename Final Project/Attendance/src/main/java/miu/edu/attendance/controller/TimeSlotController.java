@@ -22,8 +22,9 @@ public class TimeSlotController {
     ModelMapper modelMapper;
 
     @GetMapping
-    public List<TimeSlotDTO> getAll(){
-        List<TimeSlot> timeslots = timeSlotService.getAllTimeSlot();
+    public List<TimeSlotDTO> getAll(@RequestParam("page") Long pageNo, @RequestParam("size") Long size){
+        List<TimeSlot> timeslots = timeSlotService.getAllTimeSlot().stream()
+									.skip((pageNo - 1) * size).limit(size).collect(Collectors.toList());
         return timeslots.stream().map(x->modelMapper.map(x, TimeSlotDTO.class)).collect(Collectors.toList());
 	}
     
