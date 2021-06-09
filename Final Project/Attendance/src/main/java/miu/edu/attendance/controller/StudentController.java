@@ -1,6 +1,7 @@
 package miu.edu.attendance.controller;
 
 import miu.edu.attendance.dto.CourseDTO;
+import miu.edu.attendance.dto.StudentDTO;
 import miu.edu.attendance.dto.StudentDTOResponse;
 import miu.edu.attendance.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class StudentController {
 
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<CourseDTO>> getAllCourses(){
+    public ResponseEntity<List<StudentDTO>> getAllCourses(){
         return new ResponseEntity(studentService.getAllStudents(), HttpStatus.OK);
     }
 
@@ -50,5 +51,8 @@ public class StudentController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @PostMapping("/")
+    public boolean updateStudent(@RequestBody StudentDTOResponse student){
+        return studentService.updateStudent(student);
+    }
 }

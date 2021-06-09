@@ -57,10 +57,7 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
-    @Override
-    public boolean updateStudent(StudentDTOResponse student) {
-        return false;
-    }
+
 
     @Override
     public boolean deleteStudentByID(Long id) {
@@ -79,6 +76,19 @@ public class StudentServiceImpl implements StudentService {
             return (modelMapper.map(student, StudentDTOResponse.class));
         }
         return null;
+    }
+
+    @Override
+    public boolean updateStudent(StudentDTOResponse student) {
+        Student s = studentRepository.findStudentById(student.getId());
+        if (s != null) {
+            s.setStudentId(student.getStudentId());
+            s.setFirstName(student.getFirstName());
+            s.setLastName(student.getLastName());
+            studentRepository.save(s);
+            return true;
+        }
+        return false;
     }
 }
 
