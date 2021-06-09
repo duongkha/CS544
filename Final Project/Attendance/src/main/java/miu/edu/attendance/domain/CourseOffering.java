@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,7 +20,9 @@ public class CourseOffering {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private LocalDate startDate;
+    @NotNull
     private LocalDate endDate;
     @ManyToMany(mappedBy = "courseOfferings")
     private List<Student> students;
@@ -28,6 +31,7 @@ public class CourseOffering {
     @OneToMany(cascade = CascadeType.ALL)
     private List<ClassSession> classSessions;
     @ManyToOne (cascade = CascadeType.PERSIST)
+    @NotNull
     private Course course;
 
     public CourseOffering(LocalDate startDate, LocalDate endDate) {

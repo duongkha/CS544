@@ -14,11 +14,12 @@ import miu.edu.attendance.repository.UserRepository;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -65,6 +66,7 @@ public class TimeSlotServiceImpl implements TimeSlotService{
 		return timeslotRepository.findTimeSlotById(id);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<TimeSlot> getAllTimeSlot() {
 		return timeslotRepository.findAll();

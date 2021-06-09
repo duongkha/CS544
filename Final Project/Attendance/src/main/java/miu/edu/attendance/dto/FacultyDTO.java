@@ -8,5 +8,6 @@ import lombok.Setter;
 public class FacultyDTO {
     private long id;
     private int accumulatedPoints;
+    private String department;
     UserDTO user;
 }

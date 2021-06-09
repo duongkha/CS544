@@ -1,5 +1,6 @@
 package miu.edu.attendance.service;
 
+import com.zhaofujun.automapper.AutoMapper;
 import miu.edu.attendance.domain.Course;
 import miu.edu.attendance.dto.CourseDTO;
 import miu.edu.attendance.repository.CourseRepository;
@@ -19,10 +20,13 @@ public class CourseServiceImpl implements CourseService {
 @Autowired
 ModelMapper modelMapper;
 
+@Autowired
+    AutoMapper autoMapper;
 
 
 
 
+     @Transactional(readOnly = true)
     @Override
     public List<CourseDTO> getAllCourses() {
         List<Course> courses=courseRepository.findAll();
@@ -31,32 +35,34 @@ ModelMapper modelMapper;
 
     }
 
-
     @Override
     public boolean addCourse(Course course) {
-
-        if(courseRepository.save(course)!=null){
+        courseRepository.save(course);
             return true;
-        }
-        return false;
     }
 
     @Override
-    public boolean updateCourse(Course course) {
+    public boolean updateCourse(CourseDTO courseDTO) {
         Course course1=null;
-        if(course!=null && course.getId()!=null){
-            course1=courseRepository.findById(course.getId()).orElseGet(null);
+            course1=courseRepository.findById(courseDTO.getId()).orElseGet(null);
             if(course1!=null){
-                System.out.println("course service");
-                modelMapper.map(course, course1);
+                if(courseDTO.getCourseCode()!=null){
+                    course1.setCourseCode(courseDTO.getCourseCode());
+                }
+                if(courseDTO.getCourseName()!=null){
+                    course1.setCourseName(courseDTO.getCourseName());
+                }
+                if(courseDTO.getAbbreviation()!=null){
+                    course1.setAbbreviation(courseDTO.getAbbreviation());
+                }
+                if(courseDTO.getCredit()!=null){
+                    course1.setCredit(courseDTO.getCredit());
+                }
+
                 courseRepository.save(course1);
                 return true;
             }
-            else return false;
-        }
-
-  return false;
-
+           return false;
     }
 
     @Override

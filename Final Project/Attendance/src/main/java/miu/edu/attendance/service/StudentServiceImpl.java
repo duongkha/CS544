@@ -6,11 +6,13 @@ import miu.edu.attendance.repository.StudentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
@@ -18,6 +20,7 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Transactional (readOnly = true)
     @Override
     public List<StudentDTOResponse> getAllStudents() {
         List<Student> students = studentRepository.findAll();
@@ -27,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    @Transactional (readOnly = true)
     @Override
     public List<Student> getAllStudentinfo() {
         List<Student> students = studentRepository.findAll();

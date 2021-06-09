@@ -6,10 +6,13 @@ import miu.edu.attendance.dto.CourseDTO;
 import miu.edu.attendance.service.CourseServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,16 +44,24 @@ public class CourseController {
 
     }
 
-    @RequestMapping(value={"/course"}, method= RequestMethod.POST)
-    public void addCourse(@RequestBody Course course){
-        System.out.println("course saving");
+    @RequestMapping(value={"/"}, method= RequestMethod.POST)
+    public ResponseEntity addCourse( @Valid @RequestBody Course course, BindingResult result) {
+        if(result.hasErrors()){
+            return new ResponseEntity(result.getFieldError(),HttpStatus.BAD_REQUEST);
+        }
         courseService.addCourse(course);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+
+
     }
 
-    @RequestMapping(value={"/course"}, method= RequestMethod.PUT)
-    public ResponseEntity updateCourse (@RequestBody Course course){
+    @RequestMapping(value={"/"}, method= RequestMethod.PUT)
+    public ResponseEntity updateCourse ( @RequestBody CourseDTO courseDTO  ){
+
+
+
         System.out.println("course controller");
-        if(courseService.updateCourse(course)){
+        if(courseService.updateCourse(courseDTO)){
            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

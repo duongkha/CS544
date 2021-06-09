@@ -7,10 +7,12 @@ import miu.edu.attendance.repository.CourseOfferingRepository;
 import miu.edu.attendance.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class StudentRegistrationServiceImpl implements StudentRegistrationService {
 
 @Autowired

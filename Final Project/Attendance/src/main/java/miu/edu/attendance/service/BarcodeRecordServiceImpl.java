@@ -13,11 +13,14 @@ import miu.edu.attendance.repository.TimeSlotRepository;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -80,11 +83,15 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 		return false;
 	}
 
+
 	@Override
 	public BarcodeRecord findBarcodeRecordByID(Long id) {
 		return barcodeRecordRepository.findBarcodeRecordById(id);
 	}
 
+
+
+	@Transactional(readOnly = true)
 	@Override
 	public List<BarcodeRecord> getAllBarcodeRecord() {
 		return barcodeRecordRepository.findAll();

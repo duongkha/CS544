@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -31,10 +33,12 @@ public class Student  extends Person implements Serializable {
 //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name="user_id")
 //    User user;
-
+    @NotNull
+    @NotBlank
     @Column(name = "studentId")
     private String studentId;
-
+     @NotNull
+    @NotBlank
     private String barcodeId;
 
     @ManyToMany(cascade = CascadeType.PERSIST)

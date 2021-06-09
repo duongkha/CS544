@@ -1,5 +1,6 @@
 package miu.edu.attendance.config;
 
+import com.zhaofujun.automapper.AutoMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
+	@Bean
+	public AutoMapper autoMapper() {return new AutoMapper();}
+
+
+
 	@Autowired
+
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		// configure AuthenticationManager so that it knows from where to load
 		// user for matching credentials

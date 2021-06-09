@@ -9,7 +9,7 @@ import java.util.List;
 public interface CourseService {
 
     public boolean addCourse (Course course);
-    public boolean updateCourse (Course course);
+    public boolean updateCourse (CourseDTO courseDTO);
     public boolean deleteCourseByID (Long id);
     public Course findCourseByID( Long id);
     public List<CourseDTO> getAllCourses();

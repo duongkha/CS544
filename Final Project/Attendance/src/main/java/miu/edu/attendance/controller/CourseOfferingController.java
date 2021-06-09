@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/courseOfferings")
+@RequestMapping("/courseofferings")
 public class CourseOfferingController {
 
 @Autowired
@@ -24,7 +24,7 @@ CourseOfferingService courseOfferingService;
     }
 
 
-    @RequestMapping(value={"/courseOffering"}, method= RequestMethod.POST)
+    @RequestMapping(value={"/"}, method= RequestMethod.POST)
     public void addCourseOffering(@RequestBody CourseOfferingDTO courseOfferingDTO){
 
         System.out.println("courseOffering added successfully!!" +courseOfferingDTO.getEndDate());
@@ -41,4 +41,21 @@ CourseOfferingService courseOfferingService;
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping ("/{id}")
+    public ResponseEntity<CourseOfferingDTO> findCourseOfferingById (@PathVariable Long id){
+        CourseOfferingDTO courseOfferingDTO=courseOfferingService.findCourseOfferingByID(id);
+        if(courseOfferingDTO!=null){
+            return new ResponseEntity<>(courseOfferingDTO,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity updateCourseOffering(@RequestBody CourseOfferingDTO courseOfferingDTO){
+
+       if( courseOfferingService.updateCourseOffering(courseOfferingDTO)){
+           return new ResponseEntity(HttpStatus.ACCEPTED);
+       }
+       return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 }
