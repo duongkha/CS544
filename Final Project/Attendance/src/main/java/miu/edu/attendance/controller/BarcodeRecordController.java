@@ -28,6 +28,7 @@ public class BarcodeRecordController {
         return barcodeRecords.stream().map(x->modelMapper.map(x, BarcodeRecordDTO.class)).collect(Collectors.toList());
 	}
     
+    
     @PostMapping
     public Boolean addBarcodeRecord(@RequestBody BarcodeRecordDTO barcodeRecordDTO){
         return barcodeRecordService.add(barcodeRecordDTO);

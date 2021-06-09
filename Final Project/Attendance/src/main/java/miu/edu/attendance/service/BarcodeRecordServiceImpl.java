@@ -1,9 +1,11 @@
 package miu.edu.attendance.service;
 
 import miu.edu.attendance.domain.BarcodeRecord;
+import miu.edu.attendance.domain.Faculty;
 import miu.edu.attendance.domain.Location;
 import miu.edu.attendance.domain.Student;
 import miu.edu.attendance.domain.TimeSlot;
+import miu.edu.attendance.dto.AttendanceRecordDTO;
 import miu.edu.attendance.dto.BarcodeRecordDTO;
 import miu.edu.attendance.repository.BarcodeRecordRepository;
 import miu.edu.attendance.repository.LocationRepository;
@@ -12,6 +14,7 @@ import miu.edu.attendance.repository.TimeSlotRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 
@@ -32,6 +35,7 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 	
 	@Autowired
 	StudentRepository studentRepository;
+	
 	
 	@Autowired
 	TimeSlotRepository timeslotRepository;
@@ -95,6 +99,18 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 	@Override
 	public List<BarcodeRecord> getAllBarcodeRecord() {
 		return barcodeRecordRepository.findAll();
+	}
+
+	@Override
+	/*
+	 * get all attendance (barcode record) for a student on a course
+	 */
+	public List<AttendanceRecordDTO> findAllAttendanceByStudentIdAndCourse(Long studentId, Long courseId) {
+		return barcodeRecordRepository.findAll().stream()
+				.filter(x->x.getStudent().getId() == studentId && 
+						x.getLocation().getSession().getCourseOffering().getCourse().getId() == courseId)
+				.map(x->new AttendanceRecordDTO(x.getBarcodeId(),x.getDate(),x.getTimeSlot()!=null))
+				.collect(Collectors.toList());
 	}
     
 }
