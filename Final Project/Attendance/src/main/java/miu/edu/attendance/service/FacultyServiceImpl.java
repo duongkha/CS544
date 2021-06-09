@@ -1,94 +1,64 @@
 package miu.edu.attendance.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-//import com.sun.org.apache.xpath.internal.operations.Mod;
-import miu.edu.attendance.dto.FacultyDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import miu.edu.attendance.domain.Faculty;
+import miu.edu.attendance.dto.FacultyDTO;
 import miu.edu.attendance.repository.FacultyRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class FacultyServiceImpl implements FacultyService{
-    @Autowired
-    FacultyRepository facultyRepository;
-
-
-	@Transactional(readOnly = true)
-	@Override
-	public List<Faculty> findAll() {
-
-
-		return facultyRepository.findAll();
-	}
-
-	@Override
-	public List<FacultyDTO> getAllFaculty() {
-		List<Faculty> faculties= facultyRepository.findAll();
-		List<FacultyDTO> facultyDTOS= faculties.stream().map(f->modelMapper.map(f,FacultyDTO.class)).collect(Collectors.toList());
-        return facultyDTOS;
-	}
-
-
+    
 	@Autowired
 	ModelMapper modelMapper;
-	@Override
-	public boolean addFaculty(Faculty faculty) {
-		if(facultyRepository.save(faculty)!=null){
-			return true;
-		}
-		return false;
-	}
+	
+	@Autowired
+    FacultyRepository facultyRepository;
 
     @Override
-    public FacultyDTO getFacultyByID(Long id) {
-
-		Faculty faculty= facultyRepository.findById(id).orElse(null);
-		FacultyDTO facultyDTO=null;
-		if(faculty!=null){
-         facultyDTO=modelMapper.map(faculty,FacultyDTO.class);
-       return facultyDTO;
-		}
-		return facultyDTO;
+    public List<Faculty> findAll() {
+        return facultyRepository.findAll();
     }
-    
-    public boolean updateFaculty(Faculty faculty) {
-		Faculty facultyToUpdate = facultyRepository.findById(faculty.getId()).orElse(null);
-		if(facultyToUpdate!=null) {
-			if (faculty.getDepartment() != null) {
-				facultyToUpdate.setDepartment(faculty.getDepartment());
-			}
-			if (faculty.getTitle() != null) {
-				facultyToUpdate.setTitle(faculty.getTitle());
-			}
 
-			if (faculty.getUser() != null) {
-				facultyToUpdate.setUser(faculty.getUser());
-			}
-			return true;
-		}
+    @Override
+    public Faculty getFacultyByID(Long id) {
+        return facultyRepository.getFacultyById(id);
+    }
 
-		return false;
+	@Override
+	public Faculty saveFaculty(Faculty faculty) {
+		return facultyRepository.save(faculty);
 	}
 
- @Override
-	public boolean deleteFaculty(Long id) {
-		Faculty deletedFaculty = facultyRepository.findById(id).orElse(null);
-		if(deletedFaculty!=null) {
+	@Override
+	public Faculty updateFaculty(FacultyDTO facultyDto) {
+		Faculty facultyToUpdate = facultyRepository.getFacultyById(facultyDto.getId());
+		if(facultyToUpdate != null) {
+			facultyToUpdate.setTitle(facultyDto.getTitle());
+			facultyToUpdate.setDepartment(facultyDto.getDepartment());
+			facultyToUpdate.setCourseOfferings(facultyDto.getCourseOfferings());
+			facultyToUpdate.setApproved(facultyDto.isApproved());
+			facultyToUpdate.setFirstName(facultyDto.getFirstName());
+			facultyToUpdate.setLastName(facultyDto.getLastName());
+			facultyRepository.save(facultyToUpdate);
+			return facultyToUpdate;
+		}
+		return null;
+	}
+
+	@Override
+	public Faculty deleteFaculty(Long id) {
+		Faculty deletedFaculty = facultyRepository.getFacultyById(id);
+		if(deletedFaculty != null) {
 			facultyRepository.deleteById(id);
-			return true;
+			return deletedFaculty;
 		}
-		return false;
+		return null;
 	}
-
-
 
 
 }
