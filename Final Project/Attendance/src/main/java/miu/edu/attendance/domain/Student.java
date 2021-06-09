@@ -37,8 +37,8 @@ public class Student  extends Person implements Serializable {
     @NotBlank
     @Column(name = "studentId")
     private String studentId;
-     @NotNull
-    @NotBlank
+
+
     private String barcodeId;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
