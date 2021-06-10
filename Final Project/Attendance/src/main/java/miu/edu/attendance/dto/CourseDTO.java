@@ -13,4 +13,16 @@ public class CourseDTO {
     private String courseName;
     private String abbreviation;
     private String credit;
+
+
+    @Override
+    public String toString() {
+        return "CourseDTO{" +
+                "id=" + id +
+                ", courseCode='" + courseCode + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", abbreviation='" + abbreviation + '\'' +
+                ", credit='" + credit + '\'' +
+                '}';
+    }
 }

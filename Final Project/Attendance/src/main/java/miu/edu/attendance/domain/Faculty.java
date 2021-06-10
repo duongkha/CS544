@@ -25,4 +25,13 @@ public class Faculty extends Person implements Serializable {
     @OneToMany(mappedBy = "faculty",cascade = CascadeType.PERSIST)
     private List<CourseOffering> courseOfferings;
 
+
+
+
+
+    public boolean addCourseOffering(CourseOffering courseOffering){
+        courseOfferings.add(courseOffering);
+        courseOffering.setFaculty(this);
+        return true;
+    }
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class StudentRegistrationDTO {
 
-    private String studentId;
+    private Long Id;
     private String firstName;
     private String lastName;
     private String courseCode;
