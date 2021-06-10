@@ -98,7 +98,8 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 	@Transactional(readOnly = true)
 	@Override
 	public List<BarcodeRecord> getAllBarcodeRecord() {
-		return barcodeRecordRepository.findAll();
+		//return barcodeRecordRepository.findAll();
+		return null;
 	}
 
 	@Override
@@ -106,11 +107,12 @@ public class BarcodeRecordServiceImpl implements BarcodeRecordService{
 	 * get all attendance (barcode record) for a student on a course
 	 */
 	public List<AttendanceRecordDTO> findAllAttendanceByStudentIdAndCourse(Long studentId, Long courseId) {
-		return barcodeRecordRepository.findAll().stream()
-				.filter(x->x.getStudent().getId() == studentId && 
-						x.getLocation().getSession().getCourseOffering().getCourse().getId() == courseId)
-				.map(x->new AttendanceRecordDTO(x.getBarcodeId(),x.getDate(),x.getTimeSlot()!=null))
-				.collect(Collectors.toList());
+//		return barcodeRecordRepository.findAll().stream()
+//				.filter(x->x.getStudent().getId() == studentId && 
+//						x.getLocation().getSession().getCourseOffering().getCourse().getId() == courseId)
+//				.map(x->new AttendanceRecordDTO(x.getBarcodeId(),x.getDate(),x.getTimeSlot()!=null))
+//				.collect(Collectors.toList());
+		return null;
 	}
     
 }
