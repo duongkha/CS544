@@ -58,8 +58,6 @@ public class CourseController {
     @RequestMapping(value={"/"}, method= RequestMethod.PUT)
     public ResponseEntity updateCourse ( @RequestBody CourseDTO courseDTO  ){
 
-
-
         System.out.println("course controller");
         if(courseService.updateCourse(courseDTO)){
            return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -68,9 +66,9 @@ public class CourseController {
   }
 
     @RequestMapping(value={"/{id}"}, method= RequestMethod.DELETE)
-    public ResponseEntity deleteCourse(@PathVariable int id){
+    public ResponseEntity deleteCourse(@PathVariable Long id){
         System.out.println("course deleting");
-       if(courseService.deleteCourseByID(Long.valueOf(id))){
+       if(courseService.deleteCourseByID(id)){
            return new ResponseEntity<>(HttpStatus.ACCEPTED);
        }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

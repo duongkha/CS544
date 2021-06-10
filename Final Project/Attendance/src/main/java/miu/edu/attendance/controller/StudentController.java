@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("students")
+@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class StudentController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @PostMapping("/")
+    @PutMapping("/")
     public boolean updateStudent(@RequestBody StudentDTOResponse student){
         return studentService.updateStudent(student);
     }

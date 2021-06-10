@@ -34,8 +34,8 @@ public class Course {
     @NotBlank
     private String credit;
 
-    @OneToMany (mappedBy = "course",cascade = CascadeType.PERSIST)
-    private List<miu.edu.attendance.domain.CourseOffering> courseOfferings;
+    @OneToMany (mappedBy = "course",cascade = CascadeType.ALL)
+    private List<CourseOffering> courseOfferings;
 
     public boolean addCourseOffering (CourseOffering courseOffering){
         if(courseOfferings.add(courseOffering)){

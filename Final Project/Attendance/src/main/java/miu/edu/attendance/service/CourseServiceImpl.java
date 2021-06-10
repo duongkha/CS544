@@ -44,6 +44,8 @@ ModelMapper modelMapper;
     @Override
     public boolean updateCourse(CourseDTO courseDTO) {
         Course course1=null;
+
+        System.out.println(courseDTO);
             course1=courseRepository.findById(courseDTO.getId()).orElseGet(null);
             if(course1!=null){
                 if(courseDTO.getCourseCode()!=null){
