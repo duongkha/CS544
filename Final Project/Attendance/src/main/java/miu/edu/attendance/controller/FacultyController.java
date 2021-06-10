@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import miu.edu.attendance.domain.CourseOffering;
 import miu.edu.attendance.domain.Faculty;
 import miu.edu.attendance.dto.FacultyDTO;
 import miu.edu.attendance.service.FacultyService;
@@ -51,6 +52,11 @@ public class FacultyController {
 	public FacultyDTO updateCourseOffering(@RequestBody FacultyDTO facultyDto) {
 		return modelMapper.map(facultyService.updateFaculty(facultyDto), FacultyDTO.class);
 	}
+	
+//	@GetMapping
+//	public List<CourseOffering> getCourseOfferingsByFacultyId(@PathVariable Long facultyId){
+//		
+//	}
 	
 	@DeleteMapping("delete/{id}")
 	public Faculty deleteCourseOffering(@PathVariable Long id) {

@@ -1,6 +1,5 @@
 package miu.edu.attendance.config;
 
-import com.zhaofujun.automapper.AutoMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,11 +15,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.zhaofujun.automapper.AutoMapper;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private static final String[] AUTH_WHITELIST = {
+
+            // -- swagger ui
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
 
 	@Autowired
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -77,6 +86,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/student/**").hasAnyAuthority("STUDENT", "ADMIN")
 				.antMatchers("/signup").permitAll()
 				.antMatchers("/signin").permitAll()
+				.antMatchers("/swagger-ui.html").permitAll()
+				.antMatchers("/swagger-ui/**").permitAll()
+				.antMatchers(AUTH_WHITELIST).permitAll()
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 
@@ -88,4 +100,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
+	
 }
